@@ -24,7 +24,8 @@ class EmbeddedContainerState extends State<EmbeddedContainer> {
   }
 
   void _handleRouteChange(Widget widget) async {
-    setState(() async {  
+    // TODO: Widget is returning a Future Widget
+    setState(() async {
       _currentWidget = widget;
     });
   }

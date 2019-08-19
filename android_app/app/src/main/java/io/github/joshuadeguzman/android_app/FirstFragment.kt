@@ -23,6 +23,7 @@ class FirstFragment : Fragment() {
 
     private var initializationChannel: InitializationChannel? = null
     private var routeChannel: RouteChannel? = null
+    private var flutterView: FlutterView? = null
 
     companion object {
         var TAG = FirstFragment::class.java.simpleName
@@ -35,46 +36,48 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        this.loadFlutterEmbeddedWidget()
+        // TODO: Migrate this to a reusable based custom Flutter main file
+        FlutterMain.startInitialization(activity!!.applicationContext)
+        FlutterMain.ensureInitializationComplete(activity!!.applicationContext, null)
+
+        // Run FlutterView on a custom dart entry point
+        val nativeView = FlutterNativeView(activity!!)
+        flutterView = FlutterView(activity, null, nativeView)
+        val arguments = FlutterRunArguments()
+        arguments.bundlePath = FlutterMain.findAppBundlePath(activity!!.applicationContext)
+        arguments.entrypoint = "embeddedMain"
+        flutterView?.setInitialRoute("/embeddedVegetables")
+        flutterView?.runFromBundle(arguments)
+        GeneratedPluginRegistrant.registerWith(flutterView!!.pluginRegistry)
+
+        // Setup initialization channel
+        initializationChannel = InitializationChannel(flutterView!!)
+        initializationChannel?.setupWithMessenger()
+
+        // Setup routes channel
+        routeChannel = RouteChannel(flutterView!!)
+        routeChannel?.setupWithMessenger()
+
+        // Initialize FlutterView channel
+        this.initializeFlutterView()
+
+        // Subscribe to button clicks
+        btFruits.setOnClickListener {
+            this.loadFlutterView("/embeddedFruits")
+        }
+
+        btVegetables.setOnClickListener {
+            this.loadFlutterView("/embeddedVegetables")
+        }
     }
 
-    private fun loadFlutterEmbeddedWidget() {
-        context?.let {
-            // TODO: Migrate this to a reusable based custom Flutter main file
-            FlutterMain.startInitialization(activity!!.applicationContext)
-            FlutterMain.ensureInitializationComplete(activity!!.applicationContext, null)
-            val nativeView = FlutterNativeView(activity!!)
-            val flutterView = FlutterView(activity, null, nativeView)
-
-            // Run FlutterView on a custom dart entry point
-            val arguments = FlutterRunArguments()
-            arguments.bundlePath = FlutterMain.findAppBundlePath(activity!!.applicationContext)
-            arguments.entrypoint = "embeddedMain"
-            flutterView.setInitialRoute("/embeddedFruits")
-            flutterView.runFromBundle(arguments)
-            GeneratedPluginRegistrant.registerWith(flutterView.pluginRegistry)
-
-            // Subscribe to the initialization channel
-            initializationChannel = InitializationChannel(flutterView)
-            initializationChannel?.setupWithMessenger()
+    private fun initializeFlutterView() {
+        flutterView?.let {
             initializationChannel?.setupMessageHandler({ message ->
                 Log.d(TAG, "Message from Flutter $message")
 
                 // Inflate FlutterView
-                flutterContainerView.addView(flutterView)
-
-                // Setup routes channel
-                routeChannel = RouteChannel(flutterView)
-                routeChannel?.setupWithMessenger()
-                // Route
-                val userJson = JSONObject()
-                userJson.put("id", 1)
-                userJson.put("name", "Joshua")
-                val json = JSONObject()
-                json.put("route", "/embeddedFruits")
-                json.put("user", userJson)
-                json.put("isOwnProfile", true)
-                routeChannel?.sendChannelMessage(json)
+                flutterContainerView.addView(it)
 
                 // Update visibility of android layout groups
                 mainView.visibility = View.VISIBLE
@@ -87,5 +90,17 @@ class FirstFragment : Fragment() {
                 emptyView.visibility = View.VISIBLE
             })
         }
+    }
+
+    private fun loadFlutterView(route: String) {
+        // Route
+        val userJson = JSONObject()
+        userJson.put("id", 1)
+        userJson.put("name", "Joshua")
+        val json = JSONObject()
+        json.put("route", route)
+        json.put("user", userJson)
+        json.put("isOwnProfile", true)
+        routeChannel?.sendChannelMessage(json)
     }
 }

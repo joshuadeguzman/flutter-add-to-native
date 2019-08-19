@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/embedded/embedded_container.dart';
+import 'package:flutter_app/embedded/vegetables.dart';
 
 import 'embedded/fruits.dart';
 
@@ -35,6 +36,7 @@ class FlutterAppState extends State<FlutterApp> {
       routes: {
         '/': (context) => EmbeddedContainer(),
         '/embeddedFruits': (context) => FruitsEmbedded(),
+        '/embeddedVegetables': (context) => VegetablesEmbedded(),
       },
     );
   }

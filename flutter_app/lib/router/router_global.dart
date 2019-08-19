@@ -3,22 +3,24 @@
 // license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/embedded/vegetables.dart';
 import 'package:flutter_app/shared/models/route_channel_message.dart';
 import 'package:flutter_app/embedded/embedded.dart';
 
-enum Routes { EmbeddedFruits }
+enum Routes { EmbeddedFruits, EmbeddedVegetables }
 
 class Router {
   static Widget setupRouteFromMessage(
     BuildContext context,
-    Map<String, dynamic> json,
+    RouteChannelMessage channelMessage,
   ) {
-    final channelMessage = RouteChannelMessage.fromJson(json);
     final route = routesFromName(channelMessage.route);
 
-    switch(route) {
+    switch (route) {
       case Routes.EmbeddedFruits:
         return FruitsEmbedded();
+      case Routes.EmbeddedVegetables:
+        return VegetablesEmbedded();
     }
 
     return Container();
@@ -28,6 +30,8 @@ class Router {
     switch (name) {
       case "/embeddedFruits":
         return Routes.EmbeddedFruits;
+      case "/embeddedVegetables":
+        return Routes.EmbeddedVegetables;
     }
     return null;
   }

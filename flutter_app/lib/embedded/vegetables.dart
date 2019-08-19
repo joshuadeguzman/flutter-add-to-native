@@ -5,14 +5,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class FruitsEmbedded extends StatefulWidget {
+class VegetablesEmbedded extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return FruitsEmbeddedState();
+    return VegetablesEmbeddedState();
   }
 }
 
-class FruitsEmbeddedState extends State<FruitsEmbedded> {
+class VegetablesEmbeddedState extends State<VegetablesEmbedded> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,11 +20,11 @@ class FruitsEmbeddedState extends State<FruitsEmbedded> {
         child: Container(
           height: double.infinity,
           width: double.infinity,
-          color: Colors.red,
+          color: Colors.yellow,
           child: Align(
             alignment: Alignment.center,
             child: Text(
-              'Fruits',
+              'Vegetables',
             ),
           ),
         ),
