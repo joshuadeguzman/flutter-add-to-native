@@ -81,6 +81,6 @@ flutter:
   # They also do not have any bearing on your native host application's
   # identifiers, which may be completely independent or the same as these.
   module:
-    androidX: false
+    androidX: true
     androidPackage: io.github.joshuadeguzman.flutter_app
     iosBundleIdentifier: io.github.joshuadeguzman.flutterApp
