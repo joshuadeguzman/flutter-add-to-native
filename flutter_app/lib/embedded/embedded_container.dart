@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/channels/channels.dart';
 
 class EmbeddedContainer extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class EmbeddedContainerState extends State<EmbeddedContainer> {
   @override
   void initState() {
     super.initState();
+    InitializationChannel.notify();
   }
 
   @override
