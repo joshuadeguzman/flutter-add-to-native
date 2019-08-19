@@ -5,7 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import io.flutter.facade.Flutter
+import io.flutter.plugins.GeneratedPluginRegistrant
+import io.flutter.view.FlutterMain
+import io.flutter.view.FlutterNativeView
+import io.flutter.view.FlutterRunArguments
+import io.flutter.view.FlutterView
 import kotlinx.android.synthetic.main.fragment_first.*
 
 /**
@@ -29,11 +33,17 @@ class FirstFragment : Fragment() {
 
     private fun loadFlutterEmbeddedWidget() {
         context?.let {
-            val flutterView = Flutter.createView(
-                activity!!,
-                lifecycle,
-                "/"
-            )
+            FlutterMain.startInitialization(activity!!.applicationContext)
+            FlutterMain.ensureInitializationComplete(activity!!.applicationContext, null)
+            val nativeView = FlutterNativeView(activity!!)
+            val flutterView = FlutterView(activity, null, nativeView)
+
+            val arguments = FlutterRunArguments()
+            arguments.bundlePath = FlutterMain.findAppBundlePath(activity!!.applicationContext)
+            arguments.entrypoint = "embeddedMain"
+            flutterView.runFromBundle(arguments)
+            GeneratedPluginRegistrant.registerWith(flutterView.pluginRegistry)
+
             flutterContainerView.addView(flutterView)
         }
     }
