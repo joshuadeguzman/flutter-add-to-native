@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import io.flutter.facade.Flutter
+import kotlinx.android.synthetic.main.fragment_first.*
 
 /**
  * Created by Joshua de Guzman on 2019-08-19.
@@ -22,5 +24,17 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        this.loadFlutterEmbeddedWidget()
+    }
+
+    private fun loadFlutterEmbeddedWidget() {
+        context?.let {
+            val flutterView = Flutter.createView(
+                activity!!,
+                lifecycle,
+                "/"
+            )
+            flutterContainerView.addView(flutterView)
+        }
     }
 }
