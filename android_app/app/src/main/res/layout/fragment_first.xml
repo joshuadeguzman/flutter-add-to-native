@@ -8,13 +8,13 @@
     <RelativeLayout
         android:id="@+id/mainView"
         android:layout_width="match_parent"
-        tools:visibility="gone"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:visibility="gone">
 
         <FrameLayout
             android:id="@+id/flutterContainerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="200dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

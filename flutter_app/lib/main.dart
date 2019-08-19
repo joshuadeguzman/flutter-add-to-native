@@ -33,7 +33,8 @@ class FlutterAppState extends State<FlutterApp> {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => EmbeddedContainer()
+        '/': (context) => EmbeddedContainer(),
+        '/embeddedFruits': (context) => FruitsEmbedded(),
       },
     );
   }

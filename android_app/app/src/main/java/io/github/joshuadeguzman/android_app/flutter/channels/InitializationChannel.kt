@@ -23,13 +23,14 @@ class InitializationChannel(
         channel = MethodChannel(binaryMessenger, CHANNEL_NAME, codec)
     }
 
-    fun setupMessageHandler(onSuccess: (String) -> Unit, onError: (Throwable?) -> Unit) {
+    override fun setupMessageHandler(onSuccess: (String) -> Unit, onError: (Throwable?) -> Unit) {
         channel?.setMethodCallHandler { methodCall, _ ->
             when (methodCall.method) {
                 "initialized" -> {
                     onSuccess.invoke("Initialized successfully")
                 }
             }
-        } ?: onError.invoke(RuntimeException("Channel not yet initialized, please ensure that you invoked setupWithMessenger()"))
+        }
+            ?: onError.invoke(RuntimeException("Channel messenger not yet initialized, please ensure that you invoked setupWithMessenger()"))
     }
 }

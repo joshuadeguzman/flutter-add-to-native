@@ -5,4 +5,6 @@ package io.github.joshuadeguzman.android_app.flutter.channels
  */
 interface IFlutterChannel {
     fun setupWithMessenger()
+    fun setupMessageHandler(onSuccess: (String) -> Unit, onError: (Throwable?) -> Unit)
+    fun sendChannelMessage(message: Any) {}
 }

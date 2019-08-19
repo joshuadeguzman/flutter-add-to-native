@@ -12,7 +12,9 @@ import io.flutter.view.FlutterNativeView
 import io.flutter.view.FlutterRunArguments
 import io.flutter.view.FlutterView
 import io.github.joshuadeguzman.android_app.flutter.channels.InitializationChannel
+import io.github.joshuadeguzman.android_app.flutter.channels.RouteChannel
 import kotlinx.android.synthetic.main.fragment_first.*
+import org.json.JSONObject
 
 /**
  * Created by Joshua de Guzman on 2019-08-19.
@@ -20,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_first.*
 class FirstFragment : Fragment() {
 
     private var initializationChannel: InitializationChannel? = null
+    private var routeChannel: RouteChannel? = null
 
     companion object {
         var TAG = FirstFragment::class.java.simpleName
@@ -47,6 +50,7 @@ class FirstFragment : Fragment() {
             val arguments = FlutterRunArguments()
             arguments.bundlePath = FlutterMain.findAppBundlePath(activity!!.applicationContext)
             arguments.entrypoint = "embeddedMain"
+            flutterView.setInitialRoute("/embeddedFruits")
             flutterView.runFromBundle(arguments)
             GeneratedPluginRegistrant.registerWith(flutterView.pluginRegistry)
 
@@ -55,7 +59,22 @@ class FirstFragment : Fragment() {
             initializationChannel?.setupWithMessenger()
             initializationChannel?.setupMessageHandler({ message ->
                 Log.d(TAG, "Message from Flutter $message")
+
+                // Inflate FlutterView
                 flutterContainerView.addView(flutterView)
+
+                // Setup routes channel
+                routeChannel = RouteChannel(flutterView)
+                routeChannel?.setupWithMessenger()
+                // Route
+                val userJson = JSONObject()
+                userJson.put("id", 1)
+                userJson.put("name", "Joshua")
+                val json = JSONObject()
+                json.put("route", "/embeddedFruits")
+                json.put("user", userJson)
+                json.put("isOwnProfile", true)
+                routeChannel?.sendChannelMessage(json)
 
                 // Update visibility of android layout groups
                 mainView.visibility = View.VISIBLE

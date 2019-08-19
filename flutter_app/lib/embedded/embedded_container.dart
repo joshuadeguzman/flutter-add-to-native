@@ -12,8 +12,9 @@ class EmbeddedContainerState extends State<EmbeddedContainer> {
   Widget _currentWidget = Container();
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
+    RouteChannel.setRouteChangeHandler(_handleRouteChange, context);
     InitializationChannel.notify();
   }
 
