@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'embedded/fruits.dart';
+
 void main() => runApp(FlutterApp());
 
 // Custom dart entry point
@@ -23,8 +25,15 @@ class FlutterApp extends App {
 class FlutterAppState extends State<FlutterApp> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => FruitsEmbedded()
+      },
     );
   }
 }
