@@ -46,7 +46,7 @@ class FirstFragment : Fragment() {
         val arguments = FlutterRunArguments()
         arguments.bundlePath = FlutterMain.findAppBundlePath(activity!!.applicationContext)
         arguments.entrypoint = "embeddedMain"
-        flutterView?.setInitialRoute("/embeddedVegetables")
+        flutterView?.setInitialRoute("/")
         flutterView?.runFromBundle(arguments)
         GeneratedPluginRegistrant.registerWith(flutterView!!.pluginRegistry)
 

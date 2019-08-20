@@ -19,7 +19,9 @@ class RouteChannel {
   ) {
     channel.setMessageHandler((json) async {
       final widget = Router.setupRouteFromMessage(
-          context, RouteChannelMessage.fromJson(json));
+        context,
+        RouteChannelMessage.fromJson(json),
+      );
       return handler(widget);
     });
   }

@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/channels/channels.dart';
+import 'package:flutter_app/embedded/fruits.dart';
+import 'package:flutter_app/embedded/vegetables.dart';
 
 class EmbeddedContainer extends StatefulWidget {
   @override
@@ -9,11 +12,17 @@ class EmbeddedContainer extends StatefulWidget {
 }
 
 class EmbeddedContainerState extends State<EmbeddedContainer> {
-  Widget _currentWidget = Container();
+  Widget _currentWidget = Container(
+    color: Colors.black,
+  );
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
+    _setup();
+  }
+
+  _setup() {
     RouteChannel.setRouteChangeHandler(_handleRouteChange, context);
     InitializationChannel.notify();
   }
@@ -23,9 +32,9 @@ class EmbeddedContainerState extends State<EmbeddedContainer> {
     return _currentWidget;
   }
 
-  void _handleRouteChange(Widget widget) async {
+  void _handleRouteChange(Widget widget) {
     // TODO: Widget is returning a Future Widget
-    setState(() async {
+    setState(() {
       _currentWidget = widget;
     });
   }
