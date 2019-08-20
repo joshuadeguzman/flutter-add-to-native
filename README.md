@@ -1,9 +1,9 @@
 # Flutter Add to Native
 
 ### TODOs
-- [ ] Embedded Flutter Widget
+- [X] Embedded Flutter Widget
 - [ ] Navigate to a Flutter Widget Screen
-- [ ] Pass data between the native and Flutter app
+- [X] Pass data between the native and Flutter app
 - [ ] Serialized data using protos
 
 ### License
