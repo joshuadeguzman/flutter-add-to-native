@@ -1,8 +1,10 @@
+// Copyright 2019 Joshua de Guzman (https://joshuadeguzman.github.io). All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/channels/channels.dart';
-import 'package:flutter_app/embedded/fruits.dart';
-import 'package:flutter_app/embedded/vegetables.dart';
 
 class EmbeddedContainer extends StatefulWidget {
   @override
@@ -33,7 +35,6 @@ class EmbeddedContainerState extends State<EmbeddedContainer> {
   }
 
   void _handleRouteChange(Widget widget) {
-    // TODO: Widget is returning a Future Widget
     setState(() {
       _currentWidget = widget;
     });
