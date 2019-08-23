@@ -5,6 +5,6 @@
 syntax = "proto3";
 option java_package = "io.github.joshuadeguzman.flutter_app";
 
-message RouteChannel {
+message RoutesChannel {
   string route = 1;
 }
