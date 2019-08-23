@@ -4,7 +4,7 @@
 - [X] Embedded Flutter Widget
 - [ ] Navigate to a Flutter Widget Screen
 - [X] Pass data between the native and Flutter app
-- [ ] Serialized data using protos
+- [X] Serialized data using protos
 
 ### License
 
