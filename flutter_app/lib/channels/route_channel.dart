@@ -5,13 +5,13 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/router/router.dart';
-import 'package:flutter_app/shared/models/route_channel_message.dart';
+import 'package:flutter_app/protos/routes_channel.pb.dart';
 
-class RouteChannel {
+class RouteChannelHandler {
   static String _channelName = "routeChannel";
 
   static BasicMessageChannel<dynamic> channel =
-      BasicMessageChannel(_channelName, JSONMessageCodec());
+      BasicMessageChannel(_channelName, StandardMessageCodec());
 
   static void setRouteChangeHandler(
     void Function(Widget route) handler,
@@ -20,7 +20,7 @@ class RouteChannel {
     channel.setMessageHandler((json) async {
       final widget = Router.setupRouteFromMessage(
         context,
-        RouteChannelMessage.fromJson(json),
+        RoutesChannel.fromBuffer(json)
       );
       return handler(widget);
     });

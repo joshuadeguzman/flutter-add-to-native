@@ -17,7 +17,7 @@ class RouteChannel(
     }
 
     private var channel: BasicMessageChannel<Any>? = null
-    private var codec: JSONMessageCodec = JSONMessageCodec.INSTANCE
+    private var codec: StandardMessageCodec = StandardMessageCodec.INSTANCE
 
     override fun setupWithMessenger() {
         channel = BasicMessageChannel(binaryMessenger, CHANNEL_NAME, codec)
@@ -31,9 +31,9 @@ class RouteChannel(
     }
 
     override fun sendChannelMessage(message: Any) {
-        Log.d(TAG, "JDG Sending message")
+        Log.d(TAG, "Sending message...")
         channel?.send(message) {
-            Log.d(TAG, "Sending message $it")
+            Log.d(TAG, "Message: $it sent!")
         }
     }
 }

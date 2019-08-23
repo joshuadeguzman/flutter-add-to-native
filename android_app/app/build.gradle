@@ -31,6 +31,9 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/protos'
+    }
 }
 
 dependencies {
@@ -44,33 +47,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Protobuf
-    implementation 'com.google.protobuf:protobuf-lite:3.0.0'
+    implementation 'com.google.protobuf:protobuf-java:3.5.1'
 
     // Flutter
     implementation project(':flutter')
-}
-
-protobuf {
-    protoc {
-        // You still need protoc like in the non-Android case
-        artifact = 'com.google.protobuf:protoc:3.0.0'
-    }
-    plugins {
-        javalite {
-            // The codegen for lite comes as a separate artifact
-            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
-        }
-    }
-    generateProtoTasks {
-        all().each { task ->
-            task.builtins {
-                // In most cases you don't need the full Java output
-                // if you use the lite output.
-                remove java
-            }
-            task.plugins {
-                javalite { }
-            }
-        }
-    }
 }

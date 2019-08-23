@@ -4,15 +4,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/embedded/vegetables.dart';
-import 'package:flutter_app/shared/models/route_channel_message.dart';
+// import 'package:flutter_app/shared/models/route_channel_message.dart';
 import 'package:flutter_app/embedded/embedded.dart';
+import 'package:flutter_app/protos/routes_channel.pb.dart';
 
 enum Routes { EmbeddedFruits, EmbeddedVegetables }
 
 class Router {
   static Widget setupRouteFromMessage(
     BuildContext context,
-    RouteChannelMessage channelMessage,
+    RoutesChannel channelMessage,
   ) {
     final route = routesFromName(channelMessage.route);
 

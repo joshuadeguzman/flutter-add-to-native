@@ -11,10 +11,11 @@ import io.flutter.view.FlutterMain
 import io.flutter.view.FlutterNativeView
 import io.flutter.view.FlutterRunArguments
 import io.flutter.view.FlutterView
+import io.github.joshuadeguzman.FruitsEmbeddedChannelMessageOuterClass
+import io.github.joshuadeguzman.UserOuterClass
 import io.github.joshuadeguzman.android_app.flutter.channels.InitializationChannel
 import io.github.joshuadeguzman.android_app.flutter.channels.RouteChannel
 import kotlinx.android.synthetic.main.fragment_first.*
-import org.json.JSONObject
 
 /**
  * Created by Joshua de Guzman on 2019-08-19.
@@ -94,13 +95,20 @@ class FirstFragment : Fragment() {
 
     private fun loadFlutterView(route: String) {
         // Route
-        val userJson = JSONObject()
-        userJson.put("id", 1)
-        userJson.put("name", "Joshua")
-        val json = JSONObject()
-        json.put("route", route)
-        json.put("user", userJson)
-        json.put("isOwnProfile", true)
-        routeChannel?.sendChannelMessage(json)
+        val user = UserOuterClass.User.newBuilder()
+            .setId(1)
+            .setUsername("joshuadeguzman")
+            .setFirstName("Joshua")
+            .setLastName("de Guzman")
+            .build()
+
+        val message = FruitsEmbeddedChannelMessageOuterClass.FruitsEmbeddedChannelMessage.newBuilder()
+            .setRoute(route)
+            .setUser(user)
+            .setIsOwnProfile(true)
+            .build()
+            .toByteArray()
+
+         routeChannel?.sendChannelMessage(message)
     }
 }

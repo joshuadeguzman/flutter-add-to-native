@@ -25,7 +25,7 @@ class EmbeddedContainerState extends State<EmbeddedContainer> {
   }
 
   _setup() {
-    RouteChannel.setRouteChangeHandler(_handleRouteChange, context);
+    RouteChannelHandler.setRouteChangeHandler(_handleRouteChange, context);
     InitializationChannel.notify();
   }
 
